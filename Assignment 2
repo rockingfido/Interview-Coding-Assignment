@@ -1,1 +1,100 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link href="assets/css/style.css" rel="stylesheet" />
+</head>
+<style>
+  .red{color:red;}
+  .lgtext{color:#470404; font-size:28px;}
+
+</style>
+<body>
+<form action="#" name="formone"  id="formone" method="post">   
+  <table width="100%" border="0">
+    <tr>
+      <td colspan="2" style="text-align: center; color:#ff5e14;"><h1>Assignment 2</h1></td>
+    </tr>
+    <tr>
+      <td>Result</td>
+      <td id="result" class="lgtext"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="15%">Please Enter a String as input: </td>
+      <td width="85%">
+        <input type="text" name="namestring" id="namestring" placeholder="Please Enter Sting to Reverese"><br>
+        <span class="red" id="shower"></span>
+        <span class="red" id="alpha"></span>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="submitbtn" id="submitbtn" value="Submit"></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+<!-- <script src="assets/js/jquery.js" type="application/javascript"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('#formone').submit(function(e){
+      e.preventDefault();
+      var namesake=$('#namestring').val();
+
+      var dstring='string='+namesake;  
+      //alert(dstring);
+
+      $.ajax({
+        type      :   'POST',
+        url       :   'Fileprocessing.php?pid=ReverseString',
+        data        :   dstring,
+        processData :   false,
+        ContentType:   false,
+        success     :   function(event){
+                        
+                        var obj = jQuery.parseJSON(event);
+
+                        if(obj.emptystring=="Input String cannot be Empty!"){
+                        $('#shower').html(obj.emptystring);}else{$('#shower').html('');}
+
+                        if(obj.onlystr=="Please Enter only String No numbers"){
+                        $('#alpha').html(obj.onlystr);
+                        }else{ $('#alpha').html(''); }
+
+                        if(obj.result!=""){
+                        console.log(obj.result);  
+                        $('#result').html(obj.result);
+                        }else{$('#result').html('');}
+                            
+                    } // function ends here.
+        
+      }); // ajax ends here
+
+    }); // ends here.
+
+  }); // fun ends here.
+
+
+
+</script>
